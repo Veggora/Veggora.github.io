@@ -1,0 +1,30 @@
+const Discord = require('discord.js');
+const client = new Discord.Client();
+
+client.once('ready', () => {
+    console.log('Bot is ready!');
+});
+
+client.on('message', async message => {
+    if (!message.guild) return;
+
+    if (message.content === '!list_vc') {
+        const channel = message.member.voice.channel;
+        if (!channel) {
+            message.channel.send('You are not connected to any voice channel.');
+            return;
+        }
+
+        const members = channel.members;
+        if (members.size === 0) {
+            message.channel.send(`No one is connected to the voice channel '${channel.name}'.`);
+            return;
+        }
+
+        const memberList = members.map(member => member.displayName).join('\n');
+        message.channel.send(`Members connected to '${channel.name}':\n${memberList}`);
+    }
+});
+
+// Replace 'YOUR_BOT_TOKEN' with your actual bot token
+client.login(MTIwMzQ3ODU1MTQ3MTU5NTU2MA.GOKxMy.KY-_hYK2ZPF8LxDRT7bNqb_vh8I2n_FbiUKxHk);
